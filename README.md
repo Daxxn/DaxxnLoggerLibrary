@@ -14,7 +14,7 @@ app.xaml.cs
 ```cs
 public class App : Application
 {
-   public static ILogger Logger { get; init; }
+   public static ILogger Logger { get; private set; }
 
    protected override void OnStartup(StartupEventArgs e)
    {
