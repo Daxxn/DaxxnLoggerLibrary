@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerTestClient", "LoggerTestClient\LoggerTestClient.csproj", "{724B8C4F-971A-4A4D-9326-1309778A11E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,10 @@ Global
 		{823B703B-316D-4A99-A990-254F24C8CE0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{823B703B-316D-4A99-A990-254F24C8CE0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{823B703B-316D-4A99-A990-254F24C8CE0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{724B8C4F-971A-4A4D-9326-1309778A11E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{724B8C4F-971A-4A4D-9326-1309778A11E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{724B8C4F-971A-4A4D-9326-1309778A11E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{724B8C4F-971A-4A4D-9326-1309778A11E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
