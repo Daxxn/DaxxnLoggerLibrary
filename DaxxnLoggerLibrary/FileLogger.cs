@@ -1,79 +1,87 @@
-﻿using DaxxnLoggerLibrary.Models;
+﻿using System.Collections.Generic;
+using System.IO;
 
-namespace DaxxnLoggerLibrary;
+using DaxxnLoggerLibrary.Models;
 
-/// <summary>
-/// <see cref="LoggerBase"/> implementation for saving <see cref="ILog"/>s to a file.
-/// </summary>
-public class FileLogger : LoggerBase
+namespace DaxxnLoggerLibrary
 {
-   #region Local Props
    /// <summary>
-   /// Log file save path
+   /// <see cref="LoggerBase"/> implementation for saving <see cref="ILog"/>s to a file.
    /// </summary>
-   public string SavePath { get; set; }
-   /// <summary>
-   /// Maximum line count before the old logs are dropped from the log file.
-   /// </summary>
-   public static long MaxFileSize { get; set; } = 100;
-   #endregion
-
-   #region Constructors
-   /// <summary>
-   /// Create a new <see cref="FileLogger"/>.
-   /// </summary>
-   /// <param name="next">Next logger in the chain.</param>
-   /// <param name="savePath">Log file save path.</param>
-   public FileLogger(ILogger? next, string savePath) : base(next) => SavePath = savePath;
-   /// <summary>
-   /// Create a new <see cref="FileLogger"/>.
-   /// </summary>
-   /// <param name="next">Next logger in the chain.</param>
-   /// <param name="savePath">Log file save path.</param>
-   /// <param name="maxFileSize">Maximum line count of the log file.</param>
-   public FileLogger(ILogger? next, string savePath, long maxFileSize) : base(next)
+   public class FileLogger : LoggerBase
    {
-      SavePath = savePath;
-      MaxFileSize = maxFileSize;
-   }
-   #endregion
+      #region Local Props
+      /// <summary>
+      /// Log file save path
+      /// </summary>
+      public string SavePath { get; set; }
+      /// <summary>
+      /// Maximum line count before the old logs are dropped from the log file.
+      /// </summary>
+      public static long MaxFileSize { get; set; } = 100;
+      #endregion
 
-   #region Methods
-   /// <summary>
-   /// Shortens the log file to keep the size of the file from becoming too large.
-   /// </summary>
-   /// <returns></returns>
-   private List<string> ShortenFile()
-   {
-      using StreamReader reader = new(SavePath);
-      List<string> lines = new();
-      long currentReadLength = 0;
-      while (!reader.EndOfStream)
+      #region Constructors
+      /// <summary>
+      /// Create a new <see cref="FileLogger"/>.
+      /// </summary>
+      /// <param name="next">Next logger in the chain.</param>
+      /// <param name="savePath">Log file save path.</param>
+      public FileLogger(ILogger next, string savePath) : base(next) => SavePath = savePath;
+      /// <summary>
+      /// Create a new <see cref="FileLogger"/>.
+      /// </summary>
+      /// <param name="next">Next logger in the chain.</param>
+      /// <param name="savePath">Log file save path.</param>
+      /// <param name="maxFileSize">Maximum line count of the log file.</param>
+      public FileLogger(ILogger next, string savePath, long maxFileSize) : base(next)
       {
-         var line = reader.ReadLine();
-         currentReadLength++;
-         if (line == null)
-            continue;
-         lines.Add(line);
+         SavePath = savePath;
+         MaxFileSize = maxFileSize;
       }
-      if (currentReadLength + Logs.Count > MaxFileSize)
-      {
-         lines.RemoveRange(0, (lines.Count - (int)MaxFileSize) + Logs.Count);
-      }
-      return lines;
-   }
+      #endregion
 
-   protected override void AbstSave()
-   {
-      List<string> lines = new();
-      if (File.Exists(SavePath))
+      #region Methods
+      /// <summary>
+      /// Shortens the log file to keep the size of the file from becoming too large.
+      /// </summary>
+      /// <returns>Shortened log file lines.</returns>
+      private List<string> ShortenFile()
       {
-         lines = ShortenFile();
+         using (StreamReader reader = new StreamReader(SavePath))
+         {
+            List<string> lines = new List<string>();
+            long currentReadLength = 0;
+            while (!reader.EndOfStream)
+            {
+               var line = reader.ReadLine();
+               currentReadLength++;
+               if (line == null)
+                  continue;
+               lines.Add(line);
+            }
+            if (currentReadLength + Logs.Count > MaxFileSize)
+            {
+               lines.RemoveRange(0, (lines.Count - (int)MaxFileSize) + Logs.Count);
+            }
+            return lines;
+         }
       }
-      lines.AddRange(Logs.ConvertAll<string>((log) => log.ToString() ?? ""));
-      File.WriteAllLines(SavePath, lines);
-   }
 
-   protected override void AbstLog(ILog log) => Logs.Add(log);
-   #endregion
+      /// <inheritdoc/>
+      protected override void AbstSave()
+      {
+         List<string> lines = new List<string>();
+         if (File.Exists(SavePath))
+         {
+            lines = ShortenFile();
+         }
+         lines.AddRange(Logs.ConvertAll<string>((log) => log.ToString() ?? ""));
+         File.WriteAllLines(SavePath, lines);
+      }
+
+      /// <inheritdoc/>
+      protected override void AbstLog(ILog log) => Logs.Add(log);
+      #endregion
+   }
 }

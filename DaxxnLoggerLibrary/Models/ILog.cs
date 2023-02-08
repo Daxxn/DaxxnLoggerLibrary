@@ -1,11 +1,27 @@
-﻿namespace DaxxnLoggerLibrary.Models;
-
-public interface ILog
+﻿namespace DaxxnLoggerLibrary.Models
 {
-   LogType Type { get; init; }
-   int Severity { get; init; }
-   string? Message { get; }
-   object? Data { get; init; }
+   /// <summary>
+   /// Interface for a single log.
+   /// </summary>
+   public interface ILog
+   {
+      /// <inheritdoc/>
+      LogType Type { get; }
+      /// <summary>
+      /// The severity of the log. Higher is more severe.
+      /// </summary>
+      int Severity { get; }
+      /// <inheritdoc/>
+      string Message { get; }
+      /// <summary>
+      /// Extra data to give context to the log.
+      /// </summary>
+      object Data { get; }
 
-   byte[] Serialize();
+      /// <summary>
+      /// Serializes the log for saving in binary format.
+      /// </summary>
+      /// <returns>A binary array containing the data.</returns>
+      byte[] Serialize();
+   }
 }
