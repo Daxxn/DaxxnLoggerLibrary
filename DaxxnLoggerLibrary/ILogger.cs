@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using DaxxnLoggerLibrary.Models;
 
@@ -15,12 +16,6 @@ namespace DaxxnLoggerLibrary
       List<ILog> Logs { get; }
 
       /// <summary>
-      /// Serialize logs as a binary stream to reduce file size.
-      /// </summary>
-      /// <returns>Stream of serialized bytes</returns>
-      byte[] SerializeLogs();
-
-      /// <summary>
       /// Saves the logs.
       /// <para>
       /// Do nothing if saving is not required.
@@ -33,5 +28,13 @@ namespace DaxxnLoggerLibrary
       /// </summary>
       /// <param name="log"><see cref="ILog"/> to add.</param>
       void Log(ILog log);
+
+      /// <summary>
+      /// Add a <see cref="ILog"/> to the buffer async.
+      /// <para/>
+      /// Will also check the log file size.
+      /// </summary>
+      /// <param name="log"><see cref="ILog"/> to add.</param>
+      Task LogAsync(ILog log);
    }
 }
