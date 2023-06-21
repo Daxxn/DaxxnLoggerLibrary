@@ -11,6 +11,10 @@ namespace DaxxnLoggerLibrary
    public abstract class LoggerBase : ILogger
    {
       #region Local Props
+
+      /// <inheritdoc/>
+      public int SeverityLevel { get; set; } = 0;
+
       /// <summary>
       /// <see cref="ILog"/>s Buffer.
       /// </summary>
@@ -37,8 +41,21 @@ namespace DaxxnLoggerLibrary
       /// See <see href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">Chain of Responibility Pattern.</see>
       /// </para>
       /// </summary>
-      /// <param name="next">Next logger in chain.</param>
+      /// <param name="next">Next logger in the chain</param>
       public LoggerBase(ILogger next) => Next = next;
+      /// <summary>
+      /// Construct logger and append next logger in chain. Sets the priority index as well.
+      /// <para>
+      /// See <see href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">Chain of Responibility Pattern.</see>
+      /// </para>
+      /// </summary>
+      /// <param name="next">Next logger in the chain</param>
+      /// <param name="severityLevel">The severity for this logger</param>
+      public LoggerBase(ILogger next, int severityLevel)
+      {
+         Next = next;
+         SeverityLevel = severityLevel;
+      }
       #endregion
 
       #region Methods
@@ -55,45 +72,58 @@ namespace DaxxnLoggerLibrary
       }
 
       /// <summary>
-      /// Add a <see cref="ILog"/> to the buffer.
+      /// Send a log.
       /// </summary>
-      /// <param name="log"><see cref="ILog"/> to add.</param>
+      /// <param name="log"><see cref="ILog"/> to add</param>
       public void Log(ILog log)
       {
+         if (log.Severity < SeverityLevel) return;
          AbstLog(log);
          Next?.Log(log);
       }
 
       /// <summary>
-      /// Add a <see cref="ILog"/> to the buffer async.
+      /// Send a log asyncronously.
       /// </summary>
-      /// <param name="log"><see cref="ILog"/> to add.</param>
+      /// <param name="log"><see cref="ILog"/> to add</param>
       public async Task LogAsync(ILog log)
       {
+         if (log.Severity < SeverityLevel) return;
          await AbstLogAsync(log);
          Next?.LogAsync(log);
       }
 
       /// <summary>
-      /// Add a <see cref="ILog"/> to the buffer.
+      /// Send a log.
       /// </summary>
       /// <param name="type">Log type</param>
       /// <param name="message">Log message</param>
-      public void Log(LogType type, string message)
+      public void Log(string message, LogType type)
       {
          Log(new Log(type, message));
       }
 
       /// <summary>
+      /// Send a log.
+      /// </summary>
+      /// <param name="message">log message</param>
+      /// <param name="type">log type</param>
+      /// <param name="severity">log severity level</param>
+      public void Log(string message, LogType type, int severity)
+      {
+         Log(new Log(type, severity, message));
+      }
+
+      /// <summary>
       /// When overriden in a derived class, defines what the logger will do when an <see cref="ILog"/> is generated.
       /// </summary>
-      /// <param name="log"><see cref="ILog"/> to pass down the chain.</param>
+      /// <param name="log"><see cref="ILog"/> to pass down the chain</param>
       protected abstract void AbstLog(ILog log);
 
       /// <summary>
       /// When overriden in a derived class, defines what the logger will do when an <see cref="ILog"/> is generated.
       /// </summary>
-      /// <param name="log"><see cref="ILog"/> to pass down the chain.</param>
+      /// <param name="log"><see cref="ILog"/> to pass down the chain</param>
       protected abstract Task AbstLogAsync(ILog log);
 
       /// <summary>

@@ -18,14 +18,33 @@ namespace DaxxnLoggerLibrary
       /// </para>
       /// </summary>
       public ConsoleLogger() : base() { }
+
+      /// <summary>
+      /// Creates a new <see cref="ConsoleLogger"/> at the end of the chain.
+      /// <para>
+      /// See <see href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">Chain of Responibility Pattern.</see>
+      /// </para>
+      /// </summary>
+      public ConsoleLogger(int severityLevel) : base(null, severityLevel) { }
+
       /// <summary>
       /// Creates a new <see cref="ConsoleLogger"/>.
       /// <para>
       /// See <see href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">Chain of Responibility Pattern.</see>
       /// </para>
       /// </summary>
-      /// <param name="next">Next logger in the chain.</param>
+      /// <param name="next">Next logger in the chain</param>
       public ConsoleLogger(ILogger next) : base(next) { }
+
+      /// <summary>
+      /// Creates a new <see cref="ConsoleLogger"/>. Sets the severity level for the console logger.
+      /// <para>
+      /// See <see href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">Chain of Responibility Pattern.</see>
+      /// </para>
+      /// </summary>
+      /// <param name="next">Next logger in the chain</param>
+      /// <param name="severityLevel">Logger severity level</param>
+      public ConsoleLogger(ILogger next, int severityLevel) : base(next, severityLevel) { }
       #endregion
 
       #region Methods

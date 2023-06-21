@@ -11,6 +11,11 @@ namespace DaxxnLoggerLibrary
    public interface ILogger
    {
       /// <summary>
+      /// Defines the priority level for the logger. If the log has a lower priority, it will not be used with this logger.
+      /// </summary>
+      int SeverityLevel { get; set; }
+
+      /// <summary>
       /// <see cref="ILog"/>s Buffer.
       /// </summary>
       List<ILog> Logs { get; }
