@@ -14,6 +14,14 @@ namespace DaxxnLoggerLibrary.Models
       Warning = 1,
       /// <inheritdoc/>
       Information = 2,
+      /// <summary>
+      /// Something not specified. Not recommended to be used that often.
+      /// </summary>
+      Other = 3,
+      /// <inheritdoc/>
+      Action = 4,
+      /// <inheritdoc/>
+      FileManagement = 5,
    }
 
    /// <summary>
