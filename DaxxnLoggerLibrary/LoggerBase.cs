@@ -77,8 +77,10 @@ namespace DaxxnLoggerLibrary
       /// <param name="log"><see cref="ILog"/> to add</param>
       public void Log(ILog log)
       {
-         if (log.Severity < SeverityLevel) return;
-         AbstLog(log);
+         if (log.Severity < SeverityLevel)
+         {
+            AbstLog(log);
+         }
          Next?.Log(log);
       }
 
@@ -88,8 +90,10 @@ namespace DaxxnLoggerLibrary
       /// <param name="log"><see cref="ILog"/> to add</param>
       public async Task LogAsync(ILog log)
       {
-         if (log.Severity < SeverityLevel) return;
-         await AbstLogAsync(log);
+         if (log.Severity < SeverityLevel)
+         {
+            await AbstLogAsync(log);
+         }
          Next?.LogAsync(log);
       }
 
