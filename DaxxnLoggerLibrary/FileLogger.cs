@@ -22,7 +22,7 @@ namespace DaxxnLoggerLibrary
       /// <summary>
       /// Line count read from the log file.
       /// </summary>
-      private long _fileLineCount { get; set; }
+      private long FileLineCount { get; set; }
 
       /// <summary>
       /// Sets the threshold when to save the current logs to the log file.
@@ -53,7 +53,7 @@ namespace DaxxnLoggerLibrary
       public FileLogger(string savePath) : base(null)
       {
          SavePath = savePath;
-         _file = new FileInfo(SavePath);
+         _file = new FileInfo(savePath);
       }
 
       /// <summary>
@@ -83,7 +83,6 @@ namespace DaxxnLoggerLibrary
          SavePath = savePath;
          _file = new FileInfo(savePath);
       }
-
 
       /// <summary>
       /// Create a new <see cref="FileLogger"/>.
@@ -140,15 +139,15 @@ namespace DaxxnLoggerLibrary
          if (!_file.Exists) return true;
          using (var reader = _file.OpenText())
          {
-            _fileLineCount = 0;
+            FileLineCount = 0;
             while (!reader.EndOfStream)
             {
                if (reader.Read() == '\n')
                {
-                  _fileLineCount++;
+                  FileLineCount++;
                }
             }
-            return _fileLineCount < MaxFileLines;
+            return FileLineCount < MaxFileLines;
          }
       }
 

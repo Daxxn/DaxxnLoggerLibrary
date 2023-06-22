@@ -29,13 +29,30 @@ namespace DaxxnLoggerLibrary
       void Save();
 
       /// <summary>
-      /// Add a <see cref="ILog"/> to the buffer.
+      /// Add an <see cref="ILog"/>.
+      /// <para/>
+      /// Will also check the log file size.
       /// </summary>
       /// <param name="log"><see cref="ILog"/> to add.</param>
       void Log(ILog log);
 
       /// <summary>
-      /// Add a <see cref="ILog"/> to the buffer async.
+      /// Send a log.
+      /// </summary>
+      /// <param name="message">Log message</param>
+      /// <param name="type">Log type</param>
+      void Log(string message, LogType type);
+
+      /// <summary>
+      /// Send a log.
+      /// </summary>
+      /// <param name="message">Log message</param>
+      /// <param name="type">Log type</param>
+      /// <param name="severity">Log severity</param>
+      void Log(string message, LogType type, int severity);
+
+      /// <summary>
+      /// Add an <see cref="ILog"/> async.
       /// <para/>
       /// Will also check the log file size.
       /// </summary>
