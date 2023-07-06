@@ -25,7 +25,9 @@ namespace DaxxnLoggerLibrary
       /// See <see href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">Chain of Responibility Pattern.</see>
       /// </para>
       /// </summary>
-      public ConsoleLogger(int severityLevel) : base(null, severityLevel) { }
+      /// <param name="severityLevel">Logger severity level</param>
+      /// <param name="verbose">Set the logger into verbose mode</param>
+      public ConsoleLogger(int severityLevel, bool verbose = false) : base(null, severityLevel, verbose) { }
 
       /// <summary>
       /// Creates a new <see cref="ConsoleLogger"/>.
@@ -44,7 +46,8 @@ namespace DaxxnLoggerLibrary
       /// </summary>
       /// <param name="next">Next logger in the chain</param>
       /// <param name="severityLevel">Logger severity level</param>
-      public ConsoleLogger(ILogger next, int severityLevel) : base(next, severityLevel) { }
+      /// <param name="verbose">Set the logger into verbose mode</param>
+      public ConsoleLogger(ILogger next, int severityLevel, bool verbose = false) : base(next, severityLevel, verbose) { }
       #endregion
 
       #region Methods

@@ -16,6 +16,11 @@ namespace DaxxnLoggerLibrary
       int SeverityLevel { get; set; }
 
       /// <summary>
+      /// Option to set this logger as verbose. Meaning it will always log, ignoring the severity level.
+      /// </summary>
+      bool Verbose { get; set; }
+
+      /// <summary>
       /// <see cref="ILog"/>s Buffer.
       /// </summary>
       List<ILog> Logs { get; }

@@ -15,6 +15,9 @@ namespace DaxxnLoggerLibrary
       /// <inheritdoc/>
       public int SeverityLevel { get; set; } = 0;
 
+      /// <inheritdoc/>
+      public bool Verbose { get; set; } = false;
+
       /// <summary>
       /// <see cref="ILog"/>s Buffer.
       /// </summary>
@@ -51,10 +54,12 @@ namespace DaxxnLoggerLibrary
       /// </summary>
       /// <param name="next">Next logger in the chain</param>
       /// <param name="severityLevel">The severity for this logger</param>
-      public LoggerBase(ILogger next, int severityLevel)
+      /// <param name="verbose">Set the logger into verbose mode</param>
+      public LoggerBase(ILogger next, int severityLevel, bool verbose)
       {
          Next = next;
          SeverityLevel = severityLevel;
+         Verbose = verbose;
       }
       #endregion
 
@@ -77,7 +82,7 @@ namespace DaxxnLoggerLibrary
       /// <param name="log"><see cref="ILog"/> to add</param>
       public void Log(ILog log)
       {
-         if (log.Severity < SeverityLevel)
+         if (Verbose || log.Severity >= SeverityLevel)
          {
             AbstLog(log);
          }
@@ -90,7 +95,7 @@ namespace DaxxnLoggerLibrary
       /// <param name="log"><see cref="ILog"/> to add</param>
       public async Task LogAsync(ILog log)
       {
-         if (log.Severity < SeverityLevel)
+         if (Verbose || log.Severity >= SeverityLevel)
          {
             await AbstLogAsync(log);
          }

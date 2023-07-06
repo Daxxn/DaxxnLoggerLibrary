@@ -12,13 +12,17 @@ namespace DaxxnLoggerLibrary.Models
       Error = 0,
       /// <inheritdoc/>
       Warning = 1,
-      /// <inheritdoc/>
+      /// <summary>
+      /// General informational message.
+      /// </summary>
       Information = 2,
       /// <summary>
       /// Something not specified. Not recommended to be used that often.
       /// </summary>
       Other = 3,
-      /// <inheritdoc/>
+      /// <summary>
+      /// The app has performed an action.
+      /// </summary>
       Action = 4,
       /// <inheritdoc/>
       FileManagement = 5,
