@@ -109,8 +109,9 @@ namespace DaxxnLoggerLibrary
       /// </summary>
       /// <param name="next">Next logger in the chain</param>
       /// <param name="savePath">Log file save path</param>
+      /// <param name="severityLevel">Severity index for this logger</param>
       /// <param name="maxFileSize">Maximum line count of the log file</param>
-      public FileLogger(ILogger next, string savePath, int maxFileSize) : base(next)
+      public FileLogger(ILogger next, string savePath, int severityLevel, int maxFileSize) : base(next)
       {
          SavePath = savePath;
          _file = new FileInfo(savePath);
@@ -126,9 +127,10 @@ namespace DaxxnLoggerLibrary
       /// </summary>
       /// <param name="next">Next logger in the chain</param>
       /// <param name="savePath">Log file save path</param>
+      /// <param name="severityLevel">Severity index for this logger</param>
       /// <param name="maxFileSize">Maximum line count of the log file</param>
       /// <param name="saveThreshold">Line count where the logs will be saved to the file. Must be lower than max line count.</param>
-      public FileLogger(ILogger next, string savePath, int maxFileSize, int saveThreshold) : base(next)
+      public FileLogger(ILogger next, string savePath, int severityLevel, int maxFileSize, int saveThreshold) : base(next)
       {
          SavePath = savePath;
          _file = new FileInfo(savePath);
@@ -144,10 +146,10 @@ namespace DaxxnLoggerLibrary
       /// </summary>
       /// <param name="next">Next logger in the chain</param>
       /// <param name="savePath">Log file save path</param>
-      /// <param name="maxFileLines">Maximum line count of the log file</param>
       /// <param name="severityLevel">Severity index for this logger</param>
+      /// <param name="maxFileLines">Maximum line count of the log file</param>
       /// <param name="verbose">Set the logger into verbose mode</param>
-      public FileLogger(ILogger next, string savePath, int maxFileLines, int severityLevel, bool verbose = false) : base(next, severityLevel, verbose)
+      public FileLogger(ILogger next, string savePath, int severityLevel, int maxFileLines, bool verbose = false) : base(next, severityLevel, verbose)
       {
          SavePath = savePath;
          _file = new FileInfo(savePath);
@@ -163,11 +165,11 @@ namespace DaxxnLoggerLibrary
       /// </summary>
       /// <param name="next">Next logger in the chain</param>
       /// <param name="savePath">Log file save path</param>
+      /// <param name="severityLevel">Severity index for this logger</param>
       /// <param name="maxFileLines">Maximum line count of the log file</param>
       /// <param name="saveThreshold">Line count where the logs will be saved to the file. Must be lower than max line count.</param>
-      /// <param name="severityLevel">Severity index for this logger</param>
       /// <param name="verbose">Set the logger into verbose mode</param>
-      public FileLogger(ILogger next, string savePath, int maxFileLines, int saveThreshold, int severityLevel, bool verbose = false) : base(next, severityLevel, verbose)
+      public FileLogger(ILogger next, string savePath, int severityLevel, int maxFileLines, int saveThreshold, bool verbose = false) : base(next, severityLevel, verbose)
       {
          SavePath = savePath;
          _file = new FileInfo(savePath);
