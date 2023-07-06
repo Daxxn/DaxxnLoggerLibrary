@@ -31,7 +31,7 @@ namespace DaxxnLoggerLibrary
       /// <para/>
       /// Should be lower or equal to <see cref="MaxFileLines"/>.
       /// </summary>
-      public static long SaveLogsThreshold { get; set; } = 100;
+      public static int SaveLogsThreshold { get; set; } = 100;
 
       /// <summary>
       /// Maximum line count before the old logs are dropped from the log file.
@@ -40,7 +40,7 @@ namespace DaxxnLoggerLibrary
       /// <para/>
       /// Should be higher or equal to <see cref="SaveLogsThreshold"/>.
       /// </summary>
-      public static long MaxFileLines { get; set; } = 500;
+      public static int MaxFileLines { get; set; } = 500;
       #endregion
 
       #region Constructors
@@ -110,11 +110,12 @@ namespace DaxxnLoggerLibrary
       /// <param name="next">Next logger in the chain</param>
       /// <param name="savePath">Log file save path</param>
       /// <param name="maxFileSize">Maximum line count of the log file</param>
-      public FileLogger(ILogger next, string savePath, long maxFileSize) : base(next)
+      public FileLogger(ILogger next, string savePath, int maxFileSize) : base(next)
       {
          SavePath = savePath;
          _file = new FileInfo(savePath);
          MaxFileLines = maxFileSize;
+         SaveLogsThreshold = maxFileSize / 2;
       }
 
       /// <summary>
@@ -126,13 +127,52 @@ namespace DaxxnLoggerLibrary
       /// <param name="next">Next logger in the chain</param>
       /// <param name="savePath">Log file save path</param>
       /// <param name="maxFileSize">Maximum line count of the log file</param>
-      /// <param name="severityLevel">Severity index for this logger</param>
-      /// <param name="verbose">Set the logger into verbose mode</param>
-      public FileLogger(ILogger next, string savePath, long maxFileSize, int severityLevel, bool verbose = false) : base(next, severityLevel, verbose)
+      /// <param name="saveThreshold">Line count where the logs will be saved to the file. Must be lower than max line count.</param>
+      public FileLogger(ILogger next, string savePath, int maxFileSize, int saveThreshold) : base(next)
       {
          SavePath = savePath;
          _file = new FileInfo(savePath);
          MaxFileLines = maxFileSize;
+         SaveLogsThreshold = saveThreshold;
+      }
+
+      /// <summary>
+      /// Create a new <see cref="FileLogger"/>.
+      /// <para>
+      /// See <see href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">Chain of Responibility Pattern.</see>
+      /// </para>
+      /// </summary>
+      /// <param name="next">Next logger in the chain</param>
+      /// <param name="savePath">Log file save path</param>
+      /// <param name="maxFileLines">Maximum line count of the log file</param>
+      /// <param name="severityLevel">Severity index for this logger</param>
+      /// <param name="verbose">Set the logger into verbose mode</param>
+      public FileLogger(ILogger next, string savePath, int maxFileLines, int severityLevel, bool verbose = false) : base(next, severityLevel, verbose)
+      {
+         SavePath = savePath;
+         _file = new FileInfo(savePath);
+         MaxFileLines = maxFileLines;
+         SaveLogsThreshold = maxFileLines / 2;
+      }
+
+      /// <summary>
+      /// Create a new <see cref="FileLogger"/>.
+      /// <para>
+      /// See <see href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">Chain of Responibility Pattern.</see>
+      /// </para>
+      /// </summary>
+      /// <param name="next">Next logger in the chain</param>
+      /// <param name="savePath">Log file save path</param>
+      /// <param name="maxFileLines">Maximum line count of the log file</param>
+      /// <param name="saveThreshold">Line count where the logs will be saved to the file. Must be lower than max line count.</param>
+      /// <param name="severityLevel">Severity index for this logger</param>
+      /// <param name="verbose">Set the logger into verbose mode</param>
+      public FileLogger(ILogger next, string savePath, int maxFileLines, int saveThreshold, int severityLevel, bool verbose = false) : base(next, severityLevel, verbose)
+      {
+         SavePath = savePath;
+         _file = new FileInfo(savePath);
+         MaxFileLines = maxFileLines;
+         SaveLogsThreshold = saveThreshold;
       }
       #endregion
 
