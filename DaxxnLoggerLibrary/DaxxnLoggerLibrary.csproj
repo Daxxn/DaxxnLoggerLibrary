@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net462;net47;net48</TargetFrameworks>
+    <TargetFrameworks>net6.0;net461;net462;net47;net48</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
-     <Version>1.5.4</Version>
+     <Version>1.5.5</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/Daxxn/DaxxnLoggerLibrary.git</RepositoryUrl>
